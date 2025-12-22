@@ -33,9 +33,10 @@ gatk HaplotypeCaller --native-pair-hmm-threads 50 -R ${REF} -I ${SAMPLE_ID}.sort
 rm ${SAMPLE_ID}.bam
 
 # graph genome
-vg giraffe -Z ${indexDir}${prefix}.giraffe.gbz -m ${indexDir}${prefix}.min -d ${indexDir}${prefix}.dist -f ${fqDir}/MS5_${rep}_R1.fq.gz -f ${fqDir}/MS5_${rep}_R2.fq.gz -p -o GAM -t 20 > ${SAMPLE_ID}.gam
+vg giraffe -Z ${indexDir}${prefix}.giraffe.gbz -m ${indexDir}${prefix}.min -d ${indexDir}${prefix}.dist -f ${fqDir}/MS5_${rep}_R1.fq.gz -f ${fqDir}/MS5_${rep}_R2.fq.gz -p -o BAM -t 20 > ${SAMPLE_ID}.bam
 samtools sort -@ 20 -o ${SAMPLE_ID}.sorted.bam ${SAMPLE_ID}.bam
 samtools addreplacerg -r \"@RG\tID:${SAMPLE_ID}\tSM:${SAMPLE_ID}\tLB:${SAMPLE_ID}\tPL:illumina\" ${SAMPLE_ID}.sorted.bam -o ${SAMPLE_ID}.sorted.rg.bam
 samtools index ${SAMPLE_ID}.sorted.rg.bam
 rm ${SAMPLE_ID}.bam ${SAMPLE_ID}.sorted.bam
 gatk HaplotypeCaller --native-pair-hmm-threads 50 -R ${REF} -I ${SAMPLE_ID}.sorted.rg.bam -O ${SAMPLE_ID}.vcf.gz
+
